@@ -1,21 +1,48 @@
 <h1 class="small-2 small-centered columns">Inter-I</h1>
 
-<div class="small-5 small-centered columns">
-  <h4><%= @idea %></h4>
-
-  <% if !relations?(@idea) %>
-    <p>Still crunching data. No relations processed for <%= @idea %> at this time.</p>
-  <% elsif @relations %>
-    <% @relations.first(10).each do |rel| %>
-      <ul>
-        <% if relations?(rel) %>
-          <li><%= link_to rel, show_relations_path(:idea) %></li>
-        <% else %>
-          <li><%= rel %></li>
-        <% end %>
-      </ul>
+<div class="side-nav-div">
+  <h6>Explore Further</h6>
+  <ul class="side-nav">
+    <% if @categories %>
+      <% @categories.reverse_each do |cat| %>
+        <% tabs = cat[0] %>
+        <% category = cat[1] %>
+        <li class="tab-<%= tabs %>"><%= link_to category, show_category_relations_path(:idea, :category) %></li>
+      <% end %>
     <% end %>
-  <% else %>
-    <p>Still crunching data. No information reguarding <%= @idea %> at this time.</p>
-  <% end %>
+  </ul>
+</div>
+
+<div class="small-6 small-centered columns">
+
+    <div class="search-space row collapse">
+      <%= form_tag show_relations_path(:idea) do %>
+      <div class="small-9 columns">
+        <%= text_field_tag :idea, params[:idea] %>
+      </div>
+      <div class="small-3 columns">
+        <span><%= submit_tag("Explore Ideas") %></span>
+      </div>
+      <% end %>
+
+    <div class="show-relations">
+      <h4 class="idea-spacing"><%= @idea %></h4>
+
+      <% if !relations?(@idea) %>
+        <p>Still crunching data. No relations processed for <%= @idea %> at this time.</p>
+      <% elsif @relations %>
+        <% @relations.first(10).each do |rel| %>
+          <ul>
+            <% if relations?(rel) %>
+              <li><%= link_to rel, show_relations_path(:idea) %></li>
+            <% else %>
+              <li><%= rel %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% else %>
+        <p>Still crunching data. No information reguarding <%= @idea %> at this time.</p>
+      <% end %>
+    </div>
+  </div>
 </div>

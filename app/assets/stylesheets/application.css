@@ -15,3 +15,28 @@
  *= require foundation_and_overrides
 
  */
+
+.search-space {
+  margin-top: 45px;
+  margin-bottom: 15px;
+}
+
+.show-relations {
+  float: left;
+}
+
+.idea-spacing {
+  margin-top: 15px;
+  margin-left: 245px;
+}
+
+.spacer {
+  margin-top: 165px;
+  margin-left: 70px;
+}
+
+.side-nav-div {
+  margin-top: 160px;
+  margin-left: 30px;
+  float: left;
+}
