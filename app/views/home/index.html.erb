@@ -1,1 +1,15 @@
 <h1 class="small-2 small-centered columns">Inter-I</h1>
+
+<div class="small-5 small-centered columns">
+  <h4>Search an Idea to find Ideas it's related to.</h4>
+
+  <%= form_tag show_relations_path(:idea) do %>
+    <p>
+      <%= label_tag "Explore Ideas" %><br>
+      <%= text_field_tag :idea, params[:idea] %>
+    </p>
+    <p>
+      <%= submit_tag("Search") %>
+    </p>
+  <% end %>
+</div>

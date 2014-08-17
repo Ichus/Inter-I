@@ -1,1 +1,21 @@
-<h1>Home#show</h1>
+<h1 class="small-2 small-centered columns">Inter-I</h1>
+
+<div class="small-5 small-centered columns">
+  <h4><%= @idea %></h4>
+
+  <% if !relations?(@idea) %>
+    <p>Still crunching data. No relations processed for <%= @idea %> at this time.</p>
+  <% elsif @relations %>
+    <% @relations.first(10).each do |rel| %>
+      <ul>
+        <% if relations?(rel) %>
+          <li><%= link_to rel, show_relations_path(:idea) %></li>
+        <% else %>
+          <li><%= rel %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% else %>
+    <p>Still crunching data. No information reguarding <%= @idea %> at this time.</p>
+  <% end %>
+</div>
