@@ -14,6 +14,4 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
-db/messages.log
-db/*.log.*
-db/index/lucene.log.*
+/db
