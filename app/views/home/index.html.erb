@@ -1,15 +1,17 @@
-<h1 class="small-2 small-centered columns">Inter-I</h1>
+<div class="top-background">
+  <h1 class="small-2 small-centered columns header-text-margin white-text">Inter-I</h1>
+</div>
 
 <div class="small-5 small-centered columns">
   <h4 class="spacer">Search to find relations between Ideas.</h4>
 
   <div class="search-space row collapse">
     <%= form_tag show_relations_path(:idea), method: :get do %>
-    <div class="small-9 columns">
-      <%= text_field_tag :idea%>
+    <div class="small-9 columns no-padding">
+      <%= text_field_tag :idea %>
     </div>
-    <div class="small-3 columns">
-      <span><%= submit_tag("Explore Ideas") %></span>
+    <div class="small-3 columns no-padding">
+      <span><%= submit_tag "Explore Ideas", class: "tiny button blue-button" %></span>
     </div>
     <% end %>
   </div>

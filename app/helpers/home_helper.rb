@@ -27,33 +27,71 @@ module HomeHelper
     end
   end
 
-  def not_collapsed(tab, list_level, list, active_category)
-    case tab
-    when 0
-      return true
-    when 1
-      return true
-    when 2
-      collapse?(tab, list_level, list, active_category)
-    when 3
-      return true
-    else
-      "error in home_helper.rb method not_collapsed"
+  def nest_category_list(categories, cat_param, idea)
+    output = ""
+    last_level = 0
+    @idea = idea
+    @active = false
+
+    categories.reverse_each do |item|
+      level = item[0]
+      text = item[1]
+
+      @active = false if level == 1
+      
+        @active = true if cat_param == text
+
+        if level == last_level
+          output += "</li>"
+        elsif level > last_level
+          output += "<ul>"
+        elsif last_level > level
+          output += "</li>"
+          output += "</ul></li>" * (last_level - level)
+        end
+
+        if categorical_relations(text, @idea)
+        if @active && level != 0
+          output += "<li class='active tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
+        else
+          output += "<li class='tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
+        end
+      end
+      last_level = level
     end
+
+    output += "</li></ul>" * last_level
+    output.html_safe
   end
 
-  def collapse?(tab, list_level, list, active_category)
-    list.each do |level, num_tab|
-      case num_tab
-      when 1
-        @previous_tab_one = @tab_one
-        @tab_one = level if level <= list_level
-      when 2
-        @tab_two = level
-      end
-      return true if level == list_level && @tab_one == active_category
-      return true if @tab_one == active_category
-    end
-    return false
-  end
+  # def collapse?(tab, list_level, list, active_category)
+  #   case tab
+  #   when 0
+  #     return true
+  #   when 1
+  #     return true
+  #   when 2, 3
+  #     list_sub_category?(list_level, list, active_category)
+  #     true
+  #   else
+  #     "error in home_helper.rb method not_collapsed"
+  #   end
+  # end
+  #
+  # def list_sub_category?(list_level, list, active_category)
+  #   if active_category
+  #     @lower_bound = []
+  #     list.each do |level, num_tab|
+  #       @upper_bound = level if num_tab == 1 && level < list_level
+  #       @lower_bound << level if num_tab == 1 && level > list_level
+  #     end
+  #     if @upper_bound && @lower_bound[0]
+  #       list_level.between?(@upper_bound, @lower_bound[0]) && active_category.between?(@upper_bound - 1, @lower_bound[0] + 1)
+  #     elsif @upper_bound
+  #       list_level > @upper_bound && active_category > @upper_bound
+  #     else
+  #       false
+  #     end
+  #   end
+  # end
 end

@@ -19,7 +19,7 @@ class HomeController < ApplicationController
       node.outgoing(:relation).filter do |path|
         path.relationships.first[:weight] > 0.7495 &&
         !/#{node[:idea]}/i.match(path.end_node[:idea])
-      end[random..(random + 10)].reverse_each { |rel| relations << rel[:idea] }
+      end[random..(random + 10)].each { |rel| relations << rel[:idea] }
       relations
     else
       false

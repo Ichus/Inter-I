@@ -1,29 +1,12 @@
-<h1 class="small-2 small-centered columns">Inter-I</h1>
+<div class="top-background">
+  <h1 class="small-2 small-centered columns header-text-margin"><%= link_to "Inter-I", root_path, class: "white-text-show" %></h1>
+</div>
 
 <div class="side-nav-div">
   <h6>Explore <%= @idea %> Further</h6>
   <ul class="side-nav">
     <% if @categories %>
-    <% @count = 0 %>
-    <% @counts = [] %>
-      <% @categories.reverse_each do |cat| %>
-        <% tabs = cat[0] %>
-        <% category = cat[1] %>
-        <% if params[:category] %>
-          <% active, @active_cat = true, @count if category == params[:category] %>
-        <% end %>
-        <% if categorical_relations(category, @idea) %>
-          <% if not_collapsed(tabs, @count, @counts, @active_cat) %>
-            <% if active %>
-              <li class=" active tab-<%= tabs %>"><%= link_to category, show_category_relations_path(idea: @idea, category: category) %></li>
-            <% else %>
-              <li class="tab-<%= tabs %>"><%= link_to category, show_category_relations_path(idea: @idea, category: category) %></li>
-            <% end %>
-            <% @counts << [@count, tabs] %>
-            <% @count += 1 %>
-          <% end %>
-        <% end %>
-      <% end %>
+      <%= nest_category_list(@categories, params[:category], @idea) %>
     <% end %>
   </ul>
 </div>
@@ -32,18 +15,18 @@
 
     <div class="search-space row collapse">
       <%= form_tag show_relations_path(:idea), method: :get do %>
-      <div class="small-9 columns">
+      <div class="small-9 columns no-padding">
         <%= text_field_tag :idea %>
       </div>
-      <div class="small-3 columns">
-        <span><%= submit_tag("Explore Ideas") %></span>
+      <div class="small-3 columns no-padding">
+        <span><%= submit_tag "Explore Ideas", class: "tiny button blue-button" %></span>
       </div>
       <% end %>
 
     <div class="show-relations small-12 small-centered columns">
       <% if @categorical_relations %>
         <h4><%= link_to "#{@idea} - Main", show_relations_path(idea: @idea) %></h4>
-        <h5 class="tab-2">- <%= params[:category] %></h5>
+        <h5 class="tab-right">- <%= params[:category] %></h5>
       <% else %>
         <h4><%= @idea %></h4>
       <% end %>
