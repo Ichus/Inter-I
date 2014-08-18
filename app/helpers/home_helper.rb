@@ -34,11 +34,11 @@ module HomeHelper
     @active = false
 
     categories.reverse_each do |item|
-      level = item[0]
-      text = item[1]
+      if categorical_relations(item[1], @idea)
+        level = item[0]
+        text = item[1]
 
-      @active = false if level == 1
-      
+        @active = false if level == 1
         @active = true if cat_param == text
 
         if level == last_level
@@ -50,14 +50,13 @@ module HomeHelper
           output += "</ul></li>" * (last_level - level)
         end
 
-        if categorical_relations(text, @idea)
         if @active && level != 0
           output += "<li class='active tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
         else
           output += "<li class='tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
         end
+        last_level = level
       end
-      last_level = level
     end
 
     output += "</li></ul>" * last_level
