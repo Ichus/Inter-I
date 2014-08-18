@@ -1,14 +1,28 @@
 <h1 class="small-2 small-centered columns">Inter-I</h1>
 
-<!-- Filter Categories with no links from appearing in the list -->
 <div class="side-nav-div">
-  <h6>Explore Further</h6>
+  <h6>Explore <%= @idea %> Further</h6>
   <ul class="side-nav">
     <% if @categories %>
+    <% @count = 0 %>
+    <% @counts = [] %>
       <% @categories.reverse_each do |cat| %>
         <% tabs = cat[0] %>
         <% category = cat[1] %>
-        <li class="tab-<%= tabs %>"><%= link_to category, show_category_relations_path(:idea, :category) %></li>
+        <% if params[:category] %>
+          <% active, @active_cat = true, @count if category == params[:category] %>
+        <% end %>
+        <% if categorical_relations(category, @idea) %>
+          <% if not_collapsed(tabs, @count, @counts, @active_cat) %>
+            <% if active %>
+              <li class=" active tab-<%= tabs %>"><%= link_to category, show_category_relations_path(idea: @idea, category: category) %></li>
+            <% else %>
+              <li class="tab-<%= tabs %>"><%= link_to category, show_category_relations_path(idea: @idea, category: category) %></li>
+            <% end %>
+            <% @counts << [@count, tabs] %>
+            <% @count += 1 %>
+          <% end %>
+        <% end %>
       <% end %>
     <% end %>
   </ul>
@@ -17,25 +31,40 @@
 <div class="small-6 small-centered columns">
 
     <div class="search-space row collapse">
-      <%= form_tag show_relations_path(:idea) do %>
+      <%= form_tag show_relations_path(:idea), method: :get do %>
       <div class="small-9 columns">
-        <%= text_field_tag :idea, params[:idea] %>
+        <%= text_field_tag :idea %>
       </div>
       <div class="small-3 columns">
         <span><%= submit_tag("Explore Ideas") %></span>
       </div>
       <% end %>
 
-    <div class="show-relations">
-      <h4 class="idea-spacing"><%= @idea %></h4>
+    <div class="show-relations small-12 small-centered columns">
+      <% if @categorical_relations %>
+        <h4><%= link_to "#{@idea} - Main", show_relations_path(idea: @idea) %></h4>
+        <h5 class="tab-2">- <%= params[:category] %></h5>
+      <% else %>
+        <h4><%= @idea %></h4>
+      <% end %>
 
       <% if !relations?(@idea) %>
         <p>Still crunching data. No relations processed for <%= @idea %> at this time.</p>
+      <% elsif @categorical_relations %>
+        <% @categorical_relations.first(10).each do |rel| %>
+          <ul>
+            <% if relations?(rel) %>
+              <li><%= link_to rel, show_relations_path(idea: rel) %></li>
+            <% else %>
+              <li><%= rel %></li>
+            <% end %>
+          </ul>
+        <% end %>
       <% elsif @relations %>
         <% @relations.first(10).each do |rel| %>
           <ul>
             <% if relations?(rel) %>
-              <li><%= link_to rel, show_relations_path(:idea) %></li>
+              <li><%= link_to rel, show_relations_path(idea: rel) %></li>
             <% else %>
               <li><%= rel %></li>
             <% end %>

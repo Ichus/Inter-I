@@ -6,6 +6,7 @@ class HomeController < ApplicationController
     @idea = params[:idea]
     @relations = find_relations(@idea)
     @categories = find_categories(@idea)
+    params[:category] ? @categorical_relations = categorical_relations(params[:category], @idea) : @categorical_relations = false
   end
 
   def find_relations(idea)
@@ -14,7 +15,11 @@ class HomeController < ApplicationController
       node = nodey.first
       nodey.close
       relations = []
-      node.outgoing(:relation).filter{|path| path.relationships.first[:weight] > 0.7515 && !/#{node[:idea]}/i.match(path.end_node[:idea]) }.each {|rel| relations << rel[:idea] }
+      random = rand(-15..-11)
+      node.outgoing(:relation).filter do |path|
+        path.relationships.first[:weight] > 0.7495 &&
+        !/#{node[:idea]}/i.match(path.end_node[:idea])
+      end[random..(random + 10)].reverse_each { |rel| relations << rel[:idea] }
       relations
     else
       false
@@ -36,6 +41,23 @@ class HomeController < ApplicationController
         categories << [category_flag, category] unless already_found
       end
       categories
+    else
+      false
+    end
+  end
+
+  def categorical_relations(category, idea)
+    nodey = Neo4j::Node.find("idea: #{idea.inspect}")
+    if nodey.first
+      node = nodey.first
+      nodey.close
+      relations = []
+      node.outgoing(:relation).filter do |path|
+        path.relationships.first[:weight] > 0.55 &&
+        /#{category}/.match(path.relationships.first[:category]) &&
+        !/#{node[:idea]}/i.match(path.end_node[:idea])
+      end.first(10).each { |rel| relations << rel[:idea] }
+      relations
     else
       false
     end

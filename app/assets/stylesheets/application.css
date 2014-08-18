@@ -22,13 +22,13 @@
 }
 
 .show-relations {
-  float: left;
+  margin-top: 60px;
 }
 
-.idea-spacing {
+/*.idea-spacing {
   margin-top: 15px;
   margin-left: 245px;
-}
+}*/
 
 .spacer {
   margin-top: 165px;
@@ -36,7 +36,20 @@
 }
 
 .side-nav-div {
-  margin-top: 160px;
+  max-width: 15%;
+  margin-top: 95px;
   margin-left: 30px;
   float: left;
+}
+
+.tab-1 {
+  padding-left: 15px;
+}
+
+.tab-2 {
+  padding-left: 30px;
+}
+
+.tab-3 {
+  padding-left: 45px;
 }
