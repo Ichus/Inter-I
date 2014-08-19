@@ -18,11 +18,11 @@ class HomeController < ApplicationController
       node = nodey.first
       nodey.close
       relations = []
-      random = rand(-11..-7)
+      random = rand(-15..-11)
       node.outgoing(:relation).filter do |path|
         path.relationships.first[:weight] > 0.7495 &&
         !/#{node[:idea]}/i.match(path.end_node[:idea])
-      end[random..(random + 6)].each { |rel| relations << rel[:idea] }
+      end[random..(random + 10)].each { |rel| relations << rel[:idea] }
       relations
     else
       false
@@ -71,7 +71,7 @@ class HomeController < ApplicationController
   def revert_link_followed_history
     begin
       session[:idea_path].pop
-    end while session[:idea_path].last == params[:prev_followed_link]
+    end until session[:idea_path].last == params[:prev_followed_link]
   end
 
   def home_params

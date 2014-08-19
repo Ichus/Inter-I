@@ -80,7 +80,7 @@ module HomeHelper
     if session[:idea_path].length > 2
       output = ""
 
-      session[:idea_path].pop(2) if session[:idea_path].last == session[:idea_path][-3]
+      session[:idea_path].pop(2) if session[:idea_path].last == session[:idea_path][-3] && !params[:followed_link]
 
       output += "<h5>Here to There</h5>"
       output += "<ul>"

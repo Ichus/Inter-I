@@ -39,7 +39,7 @@
           <% @categorical_relations.first(10).each do |rel| %>
             <ul>
               <% if relations?(rel) %>
-                <li><%= link_to rel, show_relations_path(idea: rel) %></li>
+                <li><%= link_to rel, show_relations_path(idea: rel, followed_link: rel) %></li>
               <% else %>
                 <li><%= rel %></li>
               <% end %>
@@ -49,7 +49,7 @@
           <% @relations.first(10).each do |rel| %>
             <ul>
               <% if relations?(rel) %>
-                <li><%= link_to rel, show_relations_path(idea: rel) %></li>
+                <li><%= link_to rel, show_relations_path(idea: rel, followed_link: rel) %></li>
               <% else %>
                 <li><%= rel %></li>
               <% end %>
