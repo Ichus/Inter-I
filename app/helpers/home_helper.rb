@@ -51,9 +51,9 @@ module HomeHelper
         end
 
         if active && level != 0
-          output += "<li class='active tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
+          output += "<li class='active tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text, followed_link: "Cat:#")}"
         else
-          output += "<li class='tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
+          output += "<li class='tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text, followed_link: "Cat:")}"
         end
         last_level = level
       end
