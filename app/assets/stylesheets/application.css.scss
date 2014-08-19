@@ -60,9 +60,14 @@ z-index: 0;
   margin-left: 245px;
 }*/
 
-.spacer {
+.spacer-center {
   margin-top: 165px;
   margin-left: 70px;
+}
+
+.spacer-try-these {
+  margin-top: 85px;
+  margin-left: 125px;
 }
 
 .side-nav-div {
@@ -84,9 +89,9 @@ z-index: 0;
   margin-left: 30px;
 }
 
-.tab-2, .tab-3 {
-  display: none;
-}
+// .tab-2, .tab-3 {
+//   display: none;
+// }
 
 .active {
   display: block;
