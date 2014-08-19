@@ -31,15 +31,13 @@ module HomeHelper
     output = ""
     last_level = 0
     @idea = idea
-    @active = false
 
     categories.reverse_each do |item|
       if categorical_relations(item[1], @idea)
         level = item[0]
         text = item[1]
 
-        @active = false if level == 1
-        @active = true if cat_param == text
+        active = true if cat_param == text
 
         if level == last_level
           output += "</li>"
@@ -50,7 +48,7 @@ module HomeHelper
           output += "</ul></li>" * (last_level - level)
         end
 
-        if @active && level != 0
+        if active && level != 0
           output += "<li class='active tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
         else
           output += "<li class='tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text)}"
@@ -61,6 +59,23 @@ module HomeHelper
 
     output += "</li></ul>" * last_level
     output.html_safe
+  end
+
+  def list_idea_path
+    if session[:idea_path].length > 2
+      output = ""
+
+      session[:idea_path].pop(2) if session[:idea_path].last == session[:idea_path][-3]
+
+      output += "<h5>Here to There</h5>"
+      output += "<ul>"
+      session[:idea_path].each do |idea|
+        output += "<li>#{link_to idea, show_relations_path(idea: idea, prev_followed_link: idea)}</li>"
+      end
+      output += "</ul>"
+
+      output.html_safe
+    end
   end
 
   # def collapse?(tab, list_level, list, active_category)

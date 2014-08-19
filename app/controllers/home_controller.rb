@@ -7,6 +7,9 @@ class HomeController < ApplicationController
     @relations = find_relations(@idea)
     @categories = find_categories(@idea)
     params[:category] ? @categorical_relations = categorical_relations(params[:category], @idea) : @categorical_relations = false
+    revert_link_followed_history if params[:prev_followed_link]
+    session[:idea_path] = [] if params[:path_searched] || !session[:idea_path]
+    session[:idea_path] << @idea unless session[:idea_path].last == @idea
   end
 
   def find_relations(idea)
@@ -15,11 +18,11 @@ class HomeController < ApplicationController
       node = nodey.first
       nodey.close
       relations = []
-      random = rand(-15..-11)
+      random = rand(-11..-7)
       node.outgoing(:relation).filter do |path|
         path.relationships.first[:weight] > 0.7495 &&
         !/#{node[:idea]}/i.match(path.end_node[:idea])
-      end[random..(random + 10)].each { |rel| relations << rel[:idea] }
+      end[random..(random + 6)].each { |rel| relations << rel[:idea] }
       relations
     else
       false
@@ -61,6 +64,14 @@ class HomeController < ApplicationController
     else
       false
     end
+  end
+
+  private
+
+  def revert_link_followed_history
+    begin
+      session[:idea_path].pop
+    end while session[:idea_path].last == params[:prev_followed_link]
   end
 
   def home_params
