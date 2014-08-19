@@ -18,11 +18,10 @@ class HomeController < ApplicationController
       node = nodey.first
       nodey.close
       relations = []
-      random = rand(-15..-11)
       node.outgoing(:relation).filter do |path|
         path.relationships.first[:weight] > 0.7495 &&
         !/#{node[:idea]}/i.match(path.end_node[:idea])
-      end[random..(random + 10)].each { |rel| relations << rel[:idea] }
+      end[-11..-1].each { |rel| relations << rel[:idea] }
       relations
     else
       false
