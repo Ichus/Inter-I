@@ -59,7 +59,7 @@ class HomeController < ApplicationController
         path.relationships.first[:weight] > 0.55 &&
         /#{category}/.match(path.relationships.first[:category]) &&
         !/#{node[:idea]}/i.match(path.end_node[:idea])
-      end.first(10).each { |rel| relations << rel[:idea] }
+      end[-10..-1].each { |rel| relations << rel[:idea] }
       relations
     else
       false

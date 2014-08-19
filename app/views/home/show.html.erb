@@ -36,7 +36,7 @@
         <% if !relations?(@idea) %>
           <p>Still crunching data. No relations processed for <%= @idea %> at this time.</p>
         <% elsif @categorical_relations %>
-          <% @categorical_relations.first(10).each do |rel| %>
+          <% @categorical_relations.last(10).each do |rel| %>
             <ul>
               <% if relations?(rel) %>
                 <li><%= link_to rel, show_relations_path(idea: rel, followed_link: rel) %></li>
