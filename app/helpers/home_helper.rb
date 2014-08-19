@@ -32,6 +32,8 @@ module HomeHelper
     last_level = 0
     @idea = idea
 
+    categories = prep_nested categories
+
     categories.reverse_each do |item|
       if categorical_relations(item[1], @idea)
         level = item[0]
@@ -59,6 +61,19 @@ module HomeHelper
 
     output += "</li></ul>" * last_level
     output.html_safe
+  end
+
+  def prep_nested(categories)
+    count = -1
+    begin
+      count += 1
+    end while categories[count][0] != 0
+
+    (count + 1).times do
+      reorder_array = categories.shift
+      categories << reorder_array
+    end
+    categories
   end
 
   def list_idea_path
