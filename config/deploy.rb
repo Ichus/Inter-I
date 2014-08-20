@@ -4,6 +4,10 @@ lock '3.2.1'
 set :application, 'Inter-I'
 set :repo_url, 'https://github.com/Ichus/Inter-I.git'
 
+# Testing deployment branch
+# set :repo_url, 'https://github.com/cndforks/Inter-I.git'
+# set :branch, "deployment"
+
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
@@ -28,7 +32,7 @@ set :deploy_to, "/home/web/inter-i"
 # Default value for linked_dirs is []
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
-set :linked_dirs, %w{tmp/pids tmp/sockets log}
+set :linked_dirs, %w{tmp/pids tmp/sockets log db}
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
