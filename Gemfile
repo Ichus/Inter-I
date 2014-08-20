@@ -24,8 +24,10 @@ gem 'jruby-openssl'
 gem 'puma'
 
 # Use Capistrano for deployment
-gem 'capistrano-rails', group: :development
-gem 'capistrano-rbenv', group: :development
+gem 'capistrano', group: :development
+gem 'capistrano-rails', group: :development, require: false
+gem 'capistrano-rbenv', group: :development, require: false
+gem 'capistrano3-puma', group: :development, github: "seuros/capistrano-puma", require: false
 
 gem 'foundation-rails'
 

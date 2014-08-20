@@ -28,6 +28,8 @@ set :deploy_to, "/home/web/inter-i"
 # Default value for linked_dirs is []
 # set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
+set :linked_dirs, %w{tmp/pids tmp/sockets log}
+
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
@@ -40,6 +42,10 @@ set :rbenv_ruby, 'jruby-1.7.13'
 set :rbenv_prefix, "RBENV_ROOT=#{fetch(:rbenv_path)} RBENV_VERSION=#{fetch(:rbenv_ruby)} #{fetch(:rbenv_path)}/bin/rbenv exec"
 set :rbenv_map_bins, %w{rake gem bundle ruby rails}
 set :rbenv_roles, :all # default value
+
+# Nginx config
+set :nginx_config_name, "interi"
+set :nginx_server_name, "localhost inter-i.net"
 
 namespace :deploy do
 

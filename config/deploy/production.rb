@@ -7,6 +7,7 @@
 role :app, %w{web@66.228.60.232}
 role :web, %w{web@66.228.60.232}
 role :db,  %w{web@66.228.60.232}
+role :puma_nginx, %w{web@66.228.60.232}
 
 # Custom SSH Options
 # ==================

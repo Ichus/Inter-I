@@ -1,3 +1,11 @@
+GIT
+  remote: git://github.com/seuros/capistrano-puma.git
+  revision: 7748efb9a53dc713221d9ea48459b915a2ec5362
+  specs:
+    capistrano3-puma (0.7.0)
+      capistrano (~> 3.0)
+      puma (>= 2.6)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -155,7 +163,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    turbolinks (2.2.2)
+    turbolinks (2.2.3)
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
@@ -168,8 +176,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  capistrano
   capistrano-rails
   capistrano-rbenv
+  capistrano3-puma!
   coffee-rails (~> 4.0.0)
   foundation-rails
   jbuilder (~> 2.0)
