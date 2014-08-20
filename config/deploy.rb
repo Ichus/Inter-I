@@ -49,7 +49,7 @@ set :rbenv_roles, :all # default value
 
 # Nginx config
 set :nginx_config_name, "interi"
-set :nginx_server_name, "localhost inter-i.net"
+set :nginx_server_name, "localhost inter-i.net www.inter-i.net"
 
 namespace :deploy do
 
