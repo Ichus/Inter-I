@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
   def index
+    session[:idea_path] = []
   end
 
   def show
@@ -40,7 +41,7 @@ class HomeController < ApplicationController
         category = category.slice(1..-1)
         already_found = false
         categories.each { |cat| already_found = true if cat[1].eql? category }
-        categories << [category_flag, category] unless already_found || /Etymology/i.match(category)
+        categories << [category_flag, category] unless already_found || /Etymology/i.match(category) || /Images/i.match(category)
       end
       categories
     else
