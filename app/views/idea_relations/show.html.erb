@@ -1,0 +1,67 @@
+<div class="top-background">
+  <h1 class="small-2 small-centered columns header-text-margin"><%= link_to "Inter-I", root_path, class: "white-text-show" %></h1>
+</div>
+
+<div class="side-nav-div">
+  <h6>Explore <%= @idea %> Further</h6>
+  <ul class="side-nav">
+    <% if @categories %>
+      <%= nest_category_list(@categories, params[:category], @idea) %>
+    <% end %>
+  </ul>
+</div>
+
+<div class="small-6 small-centered columns">
+
+  <div class="search-space row collapse">
+    <%= form_tag show_relations_path(:idea), method: :get do %>
+    <div class="small-9 columns no-padding">
+      <%= text_field_tag :idea %>
+      <%= hidden_field_tag "path_searched", true %>
+    </div>
+    <div class="small-3 columns no-padding">
+      <span><%= submit_tag "Explore Ideas", class: "tiny button blue-button" %></span>
+    </div>
+    <% end %>
+
+    <div class="row">
+      <div class="show-relations small-8 columns">
+        <% if @categorical_relations %>
+          <h4><%= link_to "#{@idea} - Main", show_relations_path(idea: @idea) %></h4>
+          <h5 class="tab-right">- <%= params[:category] %></h5>
+        <% else %>
+          <h4><%= @idea %></h4>
+        <% end %>
+
+        <% if !relations?(@idea) %>
+          <p>Still crunching data. No relations processed for <%= @idea %> at this time.</p>
+        <% elsif @categorical_relations %>
+          <% @categorical_relations.last(10).each do |rel| %>
+            <ul>
+              <% if relations?(rel) %>
+                <li><%= link_to rel, show_relations_path(idea: rel, followed_link: rel) %></li>
+              <% else %>
+                <li><%= rel %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% elsif @relations %>
+          <% @relations.first(10).each do |rel| %>
+            <ul>
+              <% if relations?(rel) %>
+                <li><%= link_to rel, show_relations_path(idea: rel, followed_link: rel) %></li>
+              <% else %>
+                <li><%= rel %></li>
+              <% end %>
+            </ul>
+          <% end %>
+        <% else %>
+          <p>Still crunching data. No information reguarding <%= @idea %> at this time.</p>
+        <% end %>
+      </div>
+      <div class="show-relations small-4 columns">
+        <%= list_idea_path %>
+      </div>
+    </div>
+  </div>
+</div>

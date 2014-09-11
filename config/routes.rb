@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
+  get 'relationships/:id' => 'idea_relations#show', :as => 'show_relations'
+  get 'relationships/:id/:category' => 'idea_relations#show', :as => 'show_categorical_relations'
 
-  get 'relationships/:id' => 'home#show', :as => 'show_relations'
-  get 'relationships/:id/:category' => 'home#show', :as => 'show_category_relations'
-
-  root 'home#index'
+  root 'idea_relations#index'
 end

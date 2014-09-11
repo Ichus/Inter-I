@@ -1,4 +1,4 @@
-module HomeHelper
+module IdeaRelationsHelper
   def relations?(idea)
     nodey = Neo4j::Node.find("idea: #{idea.inspect}")
     if nodey.first
@@ -51,9 +51,9 @@ module HomeHelper
         end
 
         if active && level != 0
-          output += "<li class='active tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text, followed_link: "Cat:#")}"
+          output += "<li class='active tab-#{level}'>#{link_to text, show_categorical_relations_path(idea: @idea, category: text, followed_link: "Cat:#")}"
         else
-          output += "<li class='tab-#{level}'>#{link_to text, show_category_relations_path(idea: @idea, category: text, followed_link: "Cat:")}"
+          output += "<li class='tab-#{level}'>#{link_to text, show_categorical_relations_path(idea: @idea, category: text, followed_link: "Cat:")}"
         end
         last_level = level
       end
@@ -123,4 +123,5 @@ module HomeHelper
   #     end
   #   end
   # end
+
 end
