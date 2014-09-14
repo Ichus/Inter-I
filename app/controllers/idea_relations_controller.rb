@@ -2,6 +2,7 @@ require "#{Rails.root}/app/models/idea_relations"
 
 class IdeaRelationsController < ApplicationController
   include IdeaRelations
+  helper_method IdeaRelations.instance_methods
 
   def index
     session[:idea_path] = []

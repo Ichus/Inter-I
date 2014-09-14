@@ -34,4 +34,32 @@ module IdeaRelations
       false
     end
   end
+
+  def categorical_relations(category, idea)
+    nodey = Neo4j::Node.find("idea: #{idea.inspect}")
+    if nodey.first
+      node = nodey.first
+      nodey.close
+      relations = []
+      node.outgoing(:relation).filter do |path|
+        path.relationships.first[:weight] > 0.55 &&
+        /#{category}/.match(path.relationships.first[:category]) &&
+        !/#{node[:idea]}/i.match(path.end_node[:idea])
+      end.first(10).each { |rel| relations << rel[:idea] }
+      relations.length > 1 ? relations : false
+    else
+      false
+    end
+  end
+
+  def relations?(idea)
+    nodey = Neo4j::Node.find("idea: #{idea.inspect}")
+    if nodey.first
+      node = nodey.first
+      nodey.close
+      relations = []
+      node.outgoing(:relation).filter{|path| path.relationships.first[:weight] > 0.7515 && !/#{node[:idea]}/i.match(path.end_node[:idea]) }.each {|rel| relations << rel[:idea] }
+      !!relations.first
+    end
+  end
 end
