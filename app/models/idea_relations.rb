@@ -60,6 +60,8 @@ module IdeaRelations
       relations = []
       node.outgoing(:relation).filter{|path| path.relationships.first[:weight] > 0.7515 && !/#{node[:idea]}/i.match(path.end_node[:idea]) }.each {|rel| relations << rel[:idea] }
       !!relations.first
+    else
+      false
     end
   end
 end
