@@ -14,15 +14,15 @@
 <div class="small-6 small-centered columns">
 
   <div class="search-space row collapse">
-    <%= form_tag show_relations_path(:idea), method: :get do %>
-    <div class="small-9 columns no-padding">
-      <%= text_field_tag :idea %>
-      <%= hidden_field_tag "path_searched", true %>
-    </div>
-    <div class="small-3 columns no-padding">
-      <span><%= submit_tag "Explore Ideas", class: "tiny button blue-button" %></span>
-    </div>
-    <% end %>
+    <form action="<%= show_relations_path(:search) %>" method="get">
+      <div class="small-9 columns no-padding">
+        <%= text_field_tag :idea %>
+        <%= hidden_field_tag "path_searched", true %>
+      </div>
+      <div class="small-3 columns no-padding">
+        <span id="explore-ideas"><%= submit_tag "Explore Ideas", class: "tiny button blue-button", name: nil %></span>
+      </div>
+    </form>
 
     <div class="row">
       <div class="show-relations small-8 columns">
